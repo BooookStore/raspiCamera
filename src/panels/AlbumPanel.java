@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -17,20 +18,21 @@ import javax.swing.SwingUtilities;
 
 import layoutTest.StateManager;
 
-public class AlbumPanel extends BasePanel{
+public class AlbumPanel extends BasePanel {
 
 	/*
-	 * 写真が保存されているフォルダへのパス
-	 * 自身の環境に合わせて書き換えてください。
+	 * 写真が保存されているフォルダへのパス 自身の環境に合わせて書き換えてください。
+	 * 
+	 * TODO : 相対パスの方が良いのではないか？
 	 */
-	public static final String DIRECTORY="C:\\Users\\Sugita Ikuto\\Desktop\\raspiCamera\\resource";
+	public static final String DIRECTORY = "C:\\Users\\Sugita Ikuto\\Desktop\\raspiCamera\\resource";
 
-	//写真を格納する配列
+	// 写真を格納する配列
 	private BufferedImage[] photos;
-	//photosの要素番号を格納する変数
+	// photosの要素番号を格納する変数
 	private int index;
 
-	//写真を表示するパネル
+	// 写真を表示するパネル
 	private PhotoPanel photoPanel;
 
 	/**
@@ -39,7 +41,7 @@ public class AlbumPanel extends BasePanel{
 	public AlbumPanel(StateManager sm) {
 		super(sm);
 
-		this.index=0;
+		this.index = 0;
 
 		setLayout(new BorderLayout(0, 0));
 
@@ -65,13 +67,13 @@ public class AlbumPanel extends BasePanel{
 		});
 		bottomPanel.add(quitButton);
 
-
 		JButton nextButton = new JButton(">");
 		nextButton.setFont(new Font("MS UI Gothic", Font.BOLD, 16));
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				index++;
-				if(index>photos.length-1) index=0;
+				if (index > photos.length - 1)
+					index = 0;
 				photoPanel.draw(photos[index]);
 			}
 		});
@@ -82,7 +84,8 @@ public class AlbumPanel extends BasePanel{
 		prevButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				index--;
-				if(index<0) index=photos.length-1;
+				if (index < 0)
+					index = photos.length - 1;
 				photoPanel.draw(photos[index]);
 			}
 		});
@@ -95,7 +98,7 @@ public class AlbumPanel extends BasePanel{
 		JButton rotateButton = new JButton("ROTATE(clockwise)");
 		rotateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SwingUtilities.invokeLater(new Runnable(){
+				SwingUtilities.invokeLater(new Runnable() {
 					@Override
 					public void run() {
 
@@ -113,7 +116,7 @@ public class AlbumPanel extends BasePanel{
 		photoPanel = new PhotoPanel();
 		add(photoPanel, BorderLayout.CENTER);
 
-		SwingUtilities.invokeLater(new Runnable(){
+		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				try {
@@ -126,37 +129,39 @@ public class AlbumPanel extends BasePanel{
 		});
 	}
 
-
 	/**
-	 * 決まったフォルダから決まった変数に配列として写真を格納し、
-	 * PhotoPanelに描画する画像を渡します。
+	 * 決まったフォルダから決まった変数に配列として写真を格納し、 PhotoPanelに描画する画像を渡します。
+	 *
 	 * @throws IOException
 	 */
-	private void loadPhotos() throws IOException{
-		File directory=new File(DIRECTORY);
-		File files[] = directory.listFiles(new FileFilter(){
+	private void loadPhotos() throws IOException {
+		File directory = new File(DIRECTORY);
+		File files[] = directory.listFiles(new FileFilter() {
 			@Override
 			public boolean accept(File file) {
-				if( "jpg".equals(getSuffix(file.getName())) ) return true;
+				if ("jpg".equals(getSuffix(file.getName())))
+					return true;
 				return false;
 			}
 		});
 
-		photos=new BufferedImage[files.length];
-		for(int i=0;i<files.length;i++){
-			photos[i]=ImageIO.read(files[i]);
+		photos = new BufferedImage[files.length];
+		for (int i = 0; i < files.length; i++) {
+			photos[i] = ImageIO.read(files[i]);
 		}
 		photoPanel.draw(photos[index]);
 	}
 
 	/**
 	 * ファイル名から拡張子だけを取り出し返します。
-	 * @param filename ファイル名
+	 * 
+	 * @param filename
+	 *            ファイル名
 	 * @return 拡張子
 	 */
-	private static String getSuffix(String fileName){
-		int lastIndex=fileName.lastIndexOf(".");
-		return fileName.substring(lastIndex+1);
+	private static String getSuffix(String fileName) {
+		int lastIndex = fileName.lastIndexOf(".");
+		return fileName.substring(lastIndex + 1);
 	}
 
 }
