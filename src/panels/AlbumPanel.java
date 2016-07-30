@@ -141,9 +141,7 @@ public class AlbumPanel extends BasePanel {
 			File files[] = directory.listFiles(new FileFilter() {
 				@Override
 				public boolean accept(File file) {
-					if ("jpg".equals(getSuffix(file.getName())))
-						return true;
-					return false;
+					return file.getName().endsWith(".jpg");
 				}
 			});
 
@@ -155,17 +153,6 @@ public class AlbumPanel extends BasePanel {
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * ファイル名から拡張子だけを取り出し返します。
-	 * 
-	 * @param ファイル名
-	 * @return 拡張子
-	 */
-	private static String getSuffix(String fileName) {
-		int lastIndex = fileName.lastIndexOf(".");
-		return fileName.substring(lastIndex + 1);
 	}
 
 }
