@@ -130,33 +130,37 @@ public class AlbumPanel extends BasePanel {
 	}
 
 	/**
-	 * 決まったフォルダから決まった変数に配列として写真を格納し、 PhotoPanelに描画する画像を渡します。
-	 *
+	 * /bin/resource/かJPEG写真を読み込み、 PhotoPanelに描画する画像を渡します。
+	 * 
 	 * @throws IOException
 	 */
 	private void loadPhotos() throws IOException {
-		File directory = new File(DIRECTORY);
-		File files[] = directory.listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File file) {
-				if ("jpg".equals(getSuffix(file.getName())))
-					return true;
-				return false;
-			}
-		});
+		try {
+			File directory;
+			directory = new File(getClass().getResource("../resource").toURI());
+			File files[] = directory.listFiles(new FileFilter() {
+				@Override
+				public boolean accept(File file) {
+					if ("jpg".equals(getSuffix(file.getName())))
+						return true;
+					return false;
+				}
+			});
 
-		photos = new BufferedImage[files.length];
-		for (int i = 0; i < files.length; i++) {
-			photos[i] = ImageIO.read(files[i]);
+			photos = new BufferedImage[files.length];
+			for (int i = 0; i < files.length; i++) {
+				photos[i] = ImageIO.read(files[i]);
+			}
+			photoPanel.draw(photos[index]);
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
 		}
-		photoPanel.draw(photos[index]);
 	}
 
 	/**
 	 * ファイル名から拡張子だけを取り出し返します。
 	 * 
-	 * @param filename
-	 *            ファイル名
+	 * @param ファイル名
 	 * @return 拡張子
 	 */
 	private static String getSuffix(String fileName) {
