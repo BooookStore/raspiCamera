@@ -3,6 +3,8 @@ Raspberry pi を利用したカメラソフトウェアです。
 
 # PACKAGES
 
+![AllClass](AllClass.jpg)
+
 ## layoutTest package
 基本となるクラス群が含まれています。 
 
