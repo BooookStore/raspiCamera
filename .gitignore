@@ -1,0 +1,9 @@
+# gitにおいて、管理対象外のディレクトリ、ファイルを記述します。
+# 注意：このファイルをgitから管理対象外にしないでください。
+# gitignoreの書き方参考　-> http://qiita.com/anqooqie/items/110957797b3d5280c44f
+
+# Class ファイル
+/bin/
+
+# 画像ファイル（一応著作権の問題）
+resource
