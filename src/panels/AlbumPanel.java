@@ -110,44 +110,10 @@ public class AlbumPanel extends BasePanel {
 		photoPanel = new PhotoPanel();
 		add(photoPanel, BorderLayout.CENTER);
 
-		// TODO : Workerスレッドを使用するように変更。
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					loadPhotos();
-				} catch (IOException e) {
-					e.printStackTrace();
-
-				}
-			}
-		});
-	}
-
-	/**
-	 * /bin/resource/からJPEG写真を読み込み、 PhotoPanelに描画する画像を渡します。
-	 * 
-	 * @throws IOException
-	 */
-	private void loadPhotos() throws IOException {
 		try {
-			File directory;
-			directory = new File(getClass().getResource("../resource").toURI());
-			File files[] = directory.listFiles(new FileFilter() {
-				@Override
-				public boolean accept(File file) {
-					return file.getName().endsWith(".jpg");
-				}
-			});
-
-			photos = new BufferedImage[files.length];
-			for (int i = 0; i < files.length; i++) {
-				photos[i] = ImageIO.read(files[i]);
-			}
-			// TODO : runLatorで、実行するよう変更。
-			photoPanel.draw(photos[index]);
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
+			new LoadPotos(new File(getClass().getResource("../resource").toURI())).execute();
+		} catch (URISyntaxException e1) {
+			e1.printStackTrace();
 		}
 	}
 
