@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -110,11 +113,20 @@ public class AlbumPanel extends BasePanel {
 		photoPanel = new PhotoPanel();
 		add(photoPanel, BorderLayout.CENTER);
 
+		// 写真の読み込みを開始
 		try {
-			new LoadPotos(new File(getClass().getResource("../resource").toURI())).execute();
+			LoadPhotos lp = new LoadPhotos(new File(getClass().getResource("../resource").toURI()));
+			lp.execute();
+			photos = lp.get();
 		} catch (URISyntaxException e1) {
 			e1.printStackTrace();
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		} catch (ExecutionException e1) {
+			e1.printStackTrace();
 		}
+		
+		SwingUtilities.invokeLater(new UpdatePhotoPanel());
 	}
 
 	/**
@@ -124,7 +136,7 @@ public class AlbumPanel extends BasePanel {
 	 * @author honyaryousuke
 	 *
 	 */
-	private class LoadPotos extends SwingWorker<BufferedImage[], Void> {
+	private class LoadPhotos extends SwingWorker<BufferedImage[], Void> {
 
 		/**
 		 * 写真の読み込み先のディレクトリ
@@ -137,7 +149,7 @@ public class AlbumPanel extends BasePanel {
 		 * @param directory
 		 *            写真の読み込み先
 		 */
-		public LoadPotos(File directory) {
+		public LoadPhotos(File directory) {
 			super();
 			this.directory = directory;
 		}
@@ -151,6 +163,7 @@ public class AlbumPanel extends BasePanel {
 		@Override
 		protected BufferedImage[] doInBackground() throws Exception {
 
+			// JPEG写真のPathだけを収集
 			File files[] = directory.listFiles(new FileFilter() {
 				@Override
 				public boolean accept(File file) {
@@ -158,19 +171,19 @@ public class AlbumPanel extends BasePanel {
 				}
 			});
 
-			photos = new BufferedImage[files.length];
+			// 写真の読み込み
+			BufferedImage photos[] = new BufferedImage[files.length];
 			for (int i = 0; i < files.length; i++) {
 				photos[i] = ImageIO.read(files[i]);
 			}
-			// TODO : runLatorで、実行するよう変更。
-			photoPanel.draw(photos[index]);
 
-			return null;
+			return photos;
 		}
 
 		@Override
 		protected void done() {
 			super.done();
+			Logger.getAnonymousLogger().log(Level.INFO, "PHOTO LOAD DONE.");
 		}
 
 	}
