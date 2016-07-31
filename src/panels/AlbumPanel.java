@@ -151,4 +151,21 @@ public class AlbumPanel extends BasePanel {
 		}
 	}
 
+	/**
+	 * 表示している写真を更新します。このクラスはRunnbleを実装しており、{@link SwingUtilities#invokeLater(Runnable)}によって実行されなければならないことに注意してください。
+	 * 
+	 * @author honyaryousuke
+	 *
+	 */
+	private class updatePhotoPanel implements Runnable {
+
+		/**
+		 * 写真を表示している {@link AlbumPanel#photoPanel} を、 {@link AlbumPanel#index} に基づいて更新します。
+		 */
+		@Override
+		public void run() {
+			photoPanel.draw(photos[index]);
+		}
+		
+	}
 }
