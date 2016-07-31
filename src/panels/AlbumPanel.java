@@ -74,6 +74,7 @@ public class AlbumPanel extends BasePanel {
 				index++;
 				if (index > photos.length - 1)
 					index = 0;
+				// TODO : runLatorで、実行するよう変更。
 				photoPanel.draw(photos[index]);
 			}
 		});
@@ -86,6 +87,7 @@ public class AlbumPanel extends BasePanel {
 				index--;
 				if (index < 0)
 					index = photos.length - 1;
+				// TODO : runLatorで、実行するよう変更。
 				photoPanel.draw(photos[index]);
 			}
 		});
@@ -130,7 +132,7 @@ public class AlbumPanel extends BasePanel {
 	}
 
 	/**
-	 * /bin/resource/かJPEG写真を読み込み、 PhotoPanelに描画する画像を渡します。
+	 * /bin/resource/からJPEG写真を読み込み、 PhotoPanelに描画する画像を渡します。
 	 * 
 	 * @throws IOException
 	 */
@@ -149,6 +151,7 @@ public class AlbumPanel extends BasePanel {
 			for (int i = 0; i < files.length; i++) {
 				photos[i] = ImageIO.read(files[i]);
 			}
+			// TODO : runLatorで、実行するよう変更。
 			photoPanel.draw(photos[index]);
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
