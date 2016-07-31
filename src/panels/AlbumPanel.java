@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 import layoutTest.StateManager;
 
@@ -109,6 +110,7 @@ public class AlbumPanel extends BasePanel {
 		photoPanel = new PhotoPanel();
 		add(photoPanel, BorderLayout.CENTER);
 
+		// TODO : Workerスレッドを使用するように変更。
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -149,6 +151,28 @@ public class AlbumPanel extends BasePanel {
 		}
 	}
 
+	/**
+	 * 写真をロードするクラスです。
+	 * 
+	 * @see SwingWorker
+	 * @author honyaryousuke
+	 *
+	 */
+	private class loadPoto extends SwingWorker<BufferedImage[] , File> {
+
+		@Override
+		protected BufferedImage[] doInBackground() throws Exception {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+		@Override
+		protected void done() {
+			super.done();
+		}
+		
+	}
+	
 	/**
 	 * 表示している写真を更新します。このクラスはRunnbleを実装しており、{@link SwingUtilities#invokeLater(Runnable)}によって実行されなければならないことに注意してください。
 	 * 
