@@ -67,8 +67,7 @@ public class AlbumPanel extends BasePanel {
 				index++;
 				if (index > photos.length - 1)
 					index = 0;
-				// TODO : runLatorで、実行するよう変更。
-				photoPanel.draw(photos[index]);
+				SwingUtilities.invokeLater(new UpdatePhotoPanel());
 			}
 		});
 		add(nextButton, BorderLayout.EAST);
@@ -80,8 +79,7 @@ public class AlbumPanel extends BasePanel {
 				index--;
 				if (index < 0)
 					index = photos.length - 1;
-				// TODO : runLatorで、実行するよう変更。
-				photoPanel.draw(photos[index]);
+				SwingUtilities.invokeLater(new UpdatePhotoPanel());
 			}
 		});
 		add(prevButton, BorderLayout.WEST);
@@ -157,7 +155,7 @@ public class AlbumPanel extends BasePanel {
 	 * @author honyaryousuke
 	 *
 	 */
-	private class updatePhotoPanel implements Runnable {
+	private class UpdatePhotoPanel implements Runnable {
 
 		/**
 		 * 写真を表示している {@link AlbumPanel#photoPanel} を、 {@link AlbumPanel#index} に基づいて更新します。
