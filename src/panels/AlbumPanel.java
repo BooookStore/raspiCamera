@@ -158,21 +158,57 @@ public class AlbumPanel extends BasePanel {
 	 * @author honyaryousuke
 	 *
 	 */
-	private class loadPoto extends SwingWorker<BufferedImage[] , File> {
+	private class LoadPotos extends SwingWorker<BufferedImage[], Void> {
 
+		/**
+		 * 写真の読み込み先のディレクトリ
+		 */
+		private File directory;
+
+		/**
+		 * 写真の読み込み先ディレクトリを指定するコンストラクタ
+		 * 
+		 * @param directory
+		 *            写真の読み込み先
+		 */
+		public LoadPotos(File directory) {
+			super();
+			this.directory = directory;
+		}
+
+		/**
+		 * バックグラウンドプロセス
+		 * 
+		 * @return 読み込んだ写真
+		 * @throws Exception
+		 */
 		@Override
 		protected BufferedImage[] doInBackground() throws Exception {
-			// TODO Auto-generated method stub
+
+			File files[] = directory.listFiles(new FileFilter() {
+				@Override
+				public boolean accept(File file) {
+					return file.getName().endsWith(".jpg");
+				}
+			});
+
+			photos = new BufferedImage[files.length];
+			for (int i = 0; i < files.length; i++) {
+				photos[i] = ImageIO.read(files[i]);
+			}
+			// TODO : runLatorで、実行するよう変更。
+			photoPanel.draw(photos[index]);
+
 			return null;
 		}
-		
+
 		@Override
 		protected void done() {
 			super.done();
 		}
-		
+
 	}
-	
+
 	/**
 	 * 表示している写真を更新します。このクラスはRunnbleを実装しており、{@link SwingUtilities#invokeLater(Runnable)}によって実行されなければならないことに注意してください。
 	 * 
@@ -182,12 +218,13 @@ public class AlbumPanel extends BasePanel {
 	private class UpdatePhotoPanel implements Runnable {
 
 		/**
-		 * 写真を表示している {@link AlbumPanel#photoPanel} を、 {@link AlbumPanel#index} に基づいて更新します。
+		 * 写真を表示している {@link AlbumPanel#photoPanel} を、 {@link AlbumPanel#index}
+		 * に基づいて更新します。
 		 */
 		@Override
 		public void run() {
 			photoPanel.draw(photos[index]);
 		}
-		
+
 	}
 }
