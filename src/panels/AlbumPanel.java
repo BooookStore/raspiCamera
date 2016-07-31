@@ -20,13 +20,6 @@ import layoutTest.StateManager;
 
 public class AlbumPanel extends BasePanel {
 
-	/*
-	 * 写真が保存されているフォルダへのパス 自身の環境に合わせて書き換えてください。
-	 * 
-	 * TODO : 相対パスの方が良いのではないか？
-	 */
-	public static final String DIRECTORY = "C:\\Users\\Sugita Ikuto\\Desktop\\raspiCamera\\resource";
-
 	// 写真を格納する配列
 	private BufferedImage[] photos;
 	// photosの要素番号を格納する変数
