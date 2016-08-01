@@ -46,7 +46,7 @@ public class StateManager {
 		parent.revalidate();// 画面の更新
 	}
 
-	public void loadState() {
+	private void loadState() {
 		switch (currentNum) {
 		case MENU:
 			currentPanel = new MenuPanel(this);
@@ -60,7 +60,7 @@ public class StateManager {
 		}
 	}
 
-	public void unloadState() {
+	private void unloadState() {
 		currentPanel = null;
 	}
 
