@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import layoutTest.StateManager;
+import transitionactions.TransitionAlbum;
 
 /**
  * メニュー画面のクラスです。
@@ -43,17 +44,9 @@ public class MenuPanel extends BasePanel {
 		mainPanel.add(cameraButton);
 
 		JButton AlbumButton = new JButton("ALBUM");
-		AlbumButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-//				sm.changeState(StateManager.ALBUM);
+		AlbumButton.addActionListener(new TransitionAlbum(sm));
 				
-				// AlbumPanelの作成
-				AlbumPanel ap = new AlbumPanel(null);
 				
-				// TODO : AlbumPanelをベースのパネルへセット
-				sm.changePanel(ap);
-			}
-		});
 		AlbumButton.setFont(new Font("MS UI Gothic", Font.BOLD, 16));
 		mainPanel.add(AlbumButton);
 

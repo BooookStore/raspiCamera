@@ -1,29 +1,26 @@
 package transitionactions;
 
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import layoutTest.StateManager;
+import panels.AlbumPanel;
 
-public class Transition implements ActionListener {
+public class TransitionAlbum implements ActionListener {
 
 	// TODO : 削除予定
 	private StateManager sm;
 	
-	private Container transTo;
-	
 	/**
 	 * TODO : sm 引数を削除予定
 	 */
-	public Transition(StateManager sm,Container transTo) {
+	public TransitionAlbum(StateManager sm) {
 		this.sm = sm;
-		this.transTo = transTo;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		sm.changePanel(transTo);
+		sm.changePanel(new AlbumPanel(sm));
 	}
 
 }
