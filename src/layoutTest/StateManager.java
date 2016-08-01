@@ -1,5 +1,7 @@
 package layoutTest;
 
+import java.awt.Container;
+
 import javax.swing.JFrame;
 
 import panels.AlbumPanel;
@@ -18,14 +20,15 @@ import panels.MenuPanel;
  */
 public class StateManager {
 
+	// TODO : 削除予定
 	// 定数（管理するパネル毎に宣言）
 	public static final int MENU = 0;
 	public static final int CAMERA = 1;
 	public static final int ALBUM = 2;
 
 	private JFrame parent;// 親となるJFrameクラスのインスタンス
-	private BasePanel currentPanel;// 現在表示しているパネル
-	private int currentNum;
+	private BasePanel currentPanel;// 現在表示しているパネル TODO : 削除予定
+	private int currentNum; // TODO : 削除予定
 
 	public StateManager(JFrame parent) {
 		this.parent = parent;
@@ -34,7 +37,7 @@ public class StateManager {
 
 	/**
 	 * 表示するパネルを切り替えます。 このメソッドは通常、StateManagerクラスのインスタンスが管理するパネルから呼ばれるべきです。
-	 *
+	 *　TODO : 削除予定
 	 * @param num
 	 *            StateManagerクラスの定数を使用してください。
 	 */
@@ -46,6 +49,17 @@ public class StateManager {
 		parent.revalidate();// 画面の更新
 	}
 
+	/**
+	 * 表示しているContainerを変更します。
+	 * 
+	 * @param panel
+	 */
+	public void changePanel(Container container){
+		parent.setContentPane(container);
+		parent.revalidate();
+	}
+	
+	//TODO : 削除予定
 	private void loadState() {
 		switch (currentNum) {
 		case MENU:
@@ -60,6 +74,7 @@ public class StateManager {
 		}
 	}
 
+	// TODO : 削除予定
 	private void unloadState() {
 		currentPanel = null;
 	}

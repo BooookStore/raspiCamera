@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -43,7 +45,13 @@ public class MenuPanel extends BasePanel {
 		JButton AlbumButton = new JButton("ALBUM");
 		AlbumButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sm.changeState(StateManager.ALBUM);
+//				sm.changeState(StateManager.ALBUM);
+				
+				// AlbumPanelの作成
+				AlbumPanel ap = new AlbumPanel(null);
+				
+				// TODO : AlbumPanelをベースのパネルへセット
+				sm.changePanel(ap);
 			}
 		});
 		AlbumButton.setFont(new Font("MS UI Gothic", Font.BOLD, 16));
